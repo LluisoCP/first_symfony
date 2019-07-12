@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}All Sports{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+{% if sports %}
+    <div class="example-wrapper">
+        <h1 class="text-center">Our sports are ready ✅</h1>
+        
+        <h4 class="text-center">Here they are:</h4>
+        <ul class="list-group list-group-flush">
+            {% for sport in sports %}
+                <li class="list-group-item"><a href="{{ path('sport', { name:sport.nom} ) }}">{{ sport.nom }}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-4 offset-4">
+                <a href="{{ path('sport_add') }}">Ajouter un Sport</a>
+            </div>
+        </div>
+    </div>
+
+{% else %}
+
+    <div class="example-wrpper">
+        <h1>We have no sports yet, too bad!</h1>
+    </div>
+
+{% endif %}
+
+
+{% endblock %}

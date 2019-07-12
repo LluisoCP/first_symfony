@@ -1,0 +1,28 @@
+{# File sport/sport.html.twig #}
+
+{% extends "base.html.twig" %}
+
+{% block title %}
+    {{ sport ? sport.nom : 'Sport not found' }}
+{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <div style="float: left;">
+                <a href="{{ path('sports') }}" class="btn btn-info"><i class="fas fa-arrow-circle-left"></i>Tous les sports</a>
+            </div>
+        </div>
+        <div class="col-6 offset-3 py-5">
+                {% if sport %}
+                    <h1 class="text-center">{{ sport.nom }}</h1>
+                    <p>{{ sport.description() }}</p>
+                {% else %}
+                    <h2 class="text-center text-danger">Sport not found, mince!</h2>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

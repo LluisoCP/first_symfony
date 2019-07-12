@@ -1,0 +1,22 @@
+{# Fichier: templates/sports/sport_add.html.twig #}
+
+{% extends "base.html.twig" %}
+
+{% block title %}
+    {{ added.name }}
+{% endblock %}
+
+{% block body %}
+
+    <div style="width: 500px; margin: 50px auto;">
+        <h1 style="text-align: center;">This new sport has been added to the database</h1>
+        <ul style="list-style-type: none;">
+            <li style="margin-top: 10px;">Name of the sport: {{ added.name }}</li>
+            <li style="margin-top: 10px;">Number of players per team: {{ added.num_players }}</li>
+            <li style="margin-top: 10px;">Characteristics of the ball: {{ added.ballshape }}</li>
+            <li style="margin-top: 10px;">Played on a {{ added.surface }}m² court</li>
+        </ul>
+        <a style="margin-top:20px;" href="{{ path('sports') }}">Retourner aux sports</a>
+    </div>
+    
+{% endblock %}

@@ -1,0 +1,28 @@
+{# Fichier templates/contact.html.twig #}
+
+{% extends "base.html.twig" %}
+
+{% block title %}Contact{% endblock %}
+
+{% block body %}
+
+
+<h1>Formulaire de contact</h1>
+<form>
+    {% if sujets %}
+    
+        {% for sujet in sujets %}
+            <div>
+                <input type="checkbox" />
+                <label>{{ sujet }}</label>
+            </div>
+        {% endfor %}
+        
+    {% endif %}
+    <input type="text" value="content" />
+    <button type="submit">Envoyer</button>
+</form>
+
+
+
+{% endblock %}

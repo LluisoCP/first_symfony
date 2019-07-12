@@ -1,0 +1,24 @@
+{# Fichier: templates/films.html.twig #}
+
+{% extends "base.html.twig" %}
+
+{% block title %}Films{% endblock %}
+
+{% block body %}
+<h1>Le meilleurs films jamais faits.</h1>
+
+{% if films %}
+
+    <ul>
+    {% for film in films %}
+        <li style="margin: 10px; font-size:1.2em;"><a href="{{ path('film_show', {title:film.title}) }}">{{ film.title }}</a> - {{ film.year }}</li>
+    {% endfor %}
+    </ul>
+
+{% endif %}
+
+
+
+
+
+{% endblock %}
