@@ -8,6 +8,16 @@
         {% endblock %}
     </head>
     <body>
+        {% block header %}
+            <nav class="navbar navbar-expand navbar-light bg-light">
+                <div class="nav navbar-nav">
+                    <a class="nav-item nav-link" href="#">Home</a>
+                    <a class="nav-item nav-link" href="{{ path('logement') }}">Logement</a>
+                    <a class="nav-item nav-link" href="{{ path('sports') }}">Sport</a>
+                    <a class="nav-item nav-link" href="{{ path('voiture_index') }}">Voiture</a>
+                </div>
+            </nav>
+        {% endblock %}
         {% block body %}{% endblock %}
         {% block javascripts %}{% endblock %}
     </body>

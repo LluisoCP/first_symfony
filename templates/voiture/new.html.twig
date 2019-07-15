@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Voiture{% endblock %}
+
+{% block body %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-6 offset-3">
+
+
+                <h1>Créer une nouvelle voiture</h1>
+
+                {{ include('voiture/_form.html.twig') }}
+
+                <a class="btn btn-secondary my-1" href="{{ path('voiture_index') }}">back to list</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Voiture index{% endblock %}
+
+{% block body %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-8 offset-2">
+
+
+            <h1>Liste de Voitures</h1>
+
+            <table class="table">
+                <thead>
+                    <tr class="text-center">
+                        <th>Id</th>
+                        <th>Marque</th>
+                        <th>Modele</th>
+                        <th>Immatriculation</th>
+                        <th>Couleur</th>
+                        {#<th>CreatedAt</th>#}
+                        <th>actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for voiture in voitures %}
+                    <tr class="text-center">
+                        <td>{{ voiture.id }}</td>
+                        <td>{{ voiture.Marque }}</td>
+                        <td>{{ voiture.Modele }}</td>
+                        <td>{{ voiture.Immatriculation }}</td>
+                        <td>{{ voiture.Couleur }}</td>
+                        {#<td>{{ voiture.createdAt ? voiture.createdAt|date('Y-m-d H:i:s') : '' }}</td>#}
+                        <td>
+                            <a class="btn btn-sm btn-success" href="{{ path('voiture_show', {'id': voiture.id}) }}">show</a>
+                            <a class="btn btn-sm btn-danger" href="{{ path('voiture_edit', {'id': voiture.id}) }}">edit</a>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="7">no records found</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+
+            <a class="btn btn-info" href="{{ path('voiture_new') }}">Create new</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
