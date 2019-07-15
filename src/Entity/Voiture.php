@@ -65,6 +65,11 @@ class Voiture
      */
     private $createdAt;
 
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\Conducteur", mappedBy="voiture", cascade={"persist", "remove"})
+     */
+    private $conducteur;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -126,6 +131,24 @@ class Voiture
     public function setCreatedAt(\DateTimeInterface $createdAt): self
     {
         $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getConducteur(): ?Conducteur
+    {
+        return $this->conducteur;
+    }
+
+    public function setConducteur(?Conducteur $conducteur): self
+    {
+        $this->conducteur = $conducteur;
+
+        // set (or unset) the owning side of the relation if necessary
+        $newVoiture = $conducteur === null ? null : $this;
+        if ($newVoiture !== $conducteur->getVoiture()) {
+            $conducteur->setVoiture($newVoiture);
+        }
 
         return $this;
     }
