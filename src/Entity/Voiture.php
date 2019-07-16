@@ -27,7 +27,7 @@ class Voiture
     /**
      * @Assert\Length(
      *      min = 3,
-     *      minMessage = "Message d'erreur de Voiture (Entity): La marque doit contenir au moins trois caractères."
+     *      minMessage = "Message d'erreur de Voiture (Entity): La marque doit contenir au moins {{ limit }} caractères."
      * )
      * @ORM\Column(type="string", length=31)
      */
@@ -36,7 +36,7 @@ class Voiture
     /**
      * @Assert\Length(
      *      min = 2,
-     *      minMessage = "Le modèle doit contenir au moins deux caractères."
+     *      minMessage = "Le modèle doit contenir au moins {{ limit }} caractères."
      * )
      * @ORM\Column(type="string", length=63)
      */
@@ -69,6 +69,11 @@ class Voiture
      * @ORM\OneToOne(targetEntity="App\Entity\Conducteur", mappedBy="voiture", cascade={"persist", "remove"})
      */
     private $conducteur;
+
+    /**
+     * @ORM\Column(type="string", length=63, nullable=true)
+     */
+    private $image;
 
     public function getId(): ?int
     {
@@ -149,6 +154,18 @@ class Voiture
         if ($newVoiture !== $conducteur->getVoiture()) {
             $conducteur->setVoiture($newVoiture);
         }
+
+        return $this;
+    }
+
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
+    public function setImage(?string $image): self
+    {
+        $this->image = $image;
 
         return $this;
     }

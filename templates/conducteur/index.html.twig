@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Conducteur index{% endblock %}
+
+{% block body %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-8 offset-2 py-4">
+
+
+                <h1 class="text-center pb-2">Tous les Conducteurs</h1>
+
+                <table class="table">
+                    <thead>
+                        <tr class="text-center">
+                            <th>Id</th>
+                            <th>Prenom</th>
+                            <th>Nom</th>
+                            <th>Description</th>
+                            <th>Email</th>
+                            <th>Age</th>
+                            <th>Voiture</th>
+                            <th>CreatedAt</th>
+                            <th>actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for conducteur in conducteurs %}
+                        <tr class="text-center">
+                            <td class="align-middle">{{ conducteur.id }}</td>
+                            <td class="align-middle">{{ conducteur.prenom }}</td>
+                            <td class="align-middle">{{ conducteur.nom }}</td>
+                            <td class="align-middle">{{ conducteur.description }}</td>
+                            <td class="align-middle">{{ conducteur.email }}</td>
+                            <td class="align-middle">{{ conducteur.age }}</td>
+                            <td class="align-middle">{{ conducteur.getVoiture() ? conducteur.getVoiture().Immatriculation : 'Aucune' }}</td>
+                            <td class="align-middle">{{ conducteur.createdAt ? conducteur.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                            <td class="align-middle">
+                                <a class="btn btn-sm btn-success" href="{{ path('conducteur_show', {'id': conducteur.id}) }}">show</a>
+                                <a class="btn btn-sm btn-danger" href="{{ path('conducteur_edit', {'id': conducteur.id}) }}">edit</a>
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="9">no records found</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+
+                <a class="btn btn-info" href="{{ path('conducteur_new') }}">Create new</a>
+                
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -8,7 +8,7 @@
         <div class="col-8 offset-2">
 
 
-            <h1>Liste de Voitures</h1>
+            <h1 class="text-center">Liste de Voitures</h1>
 
             <table class="table">
                 <thead>
@@ -18,20 +18,22 @@
                         <th>Modele</th>
                         <th>Immatriculation</th>
                         <th>Couleur</th>
-                        {#<th>CreatedAt</th>#}
+                        <th>Image</th>
+                        <th>CreatedAt</th>
                         <th>actions</th>
                     </tr>
                 </thead>
                 <tbody>
                 {% for voiture in voitures %}
                     <tr class="text-center">
-                        <td>{{ voiture.id }}</td>
-                        <td>{{ voiture.Marque }}</td>
-                        <td>{{ voiture.Modele }}</td>
-                        <td>{{ voiture.Immatriculation }}</td>
-                        <td>{{ voiture.Couleur }}</td>
-                        {#<td>{{ voiture.createdAt ? voiture.createdAt|date('Y-m-d H:i:s') : '' }}</td>#}
-                        <td>
+                        <td class="align-middle">{{ voiture.id }}</td>
+                        <td class="align-middle">{{ voiture.Marque }}</td>
+                        <td class="align-middle">{{ voiture.Modele }}</td>
+                        <td class="align-middle">{{ voiture.Immatriculation|upper }}</td>
+                        <td class="align-middle">{{ voiture.Couleur }}</td>
+                        <td class="align-middle"><img height="80px" src="{{ voiture.image ? asset('uploads/voitures') ~ voiture.image : asset('img/voiture_default.png') }}"</td>
+                        <td class="align-middle">{{ voiture.createdAt ? voiture.createdAt|date('H:i d/m/Y') : '' }}</td>
+                        <td class="align-middle">
                             <a class="btn btn-sm btn-success" href="{{ path('voiture_show', {'id': voiture.id}) }}">show</a>
                             <a class="btn btn-sm btn-danger" href="{{ path('voiture_edit', {'id': voiture.id}) }}">edit</a>
                         </td>

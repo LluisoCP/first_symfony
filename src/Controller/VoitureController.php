@@ -9,6 +9,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * @Route("/voiture")
@@ -35,6 +37,34 @@ class VoitureController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            /**@var UploadedFile $image */
+            $image = $form['image']->getData();
+            if ($image)
+            {
+                $data = $request->request->all();
+                $plaque = $data['Immatriculation'];
+                // $plaque = $request->request->get('Immatriculation');
+                $nameWithoutExtension = strtolower(str_replace(['_', '-'], '', $plaque));
+                $extension = $image->guessExtension();
+                $nameWithExtension = $nameWithoutExtension . '.' . $extension;
+                // $nameWithExtension = $plaque . '.jpg';
+
+                try
+                {
+                    $image->move(
+                        $this->getParameter('voiture_directory'),
+                        $nameWithExtension
+                    );
+                }
+                catch (FileException $e)
+                {
+                    $error = [$e->getCode(), $e->getMessage()];
+                }
+                $voiture->setImage($nameWithExtension);
+            }
+
+
+
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($voiture);
             $entityManager->flush();

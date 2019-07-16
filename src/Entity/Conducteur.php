@@ -3,12 +3,17 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ConducteurRepository")
  */
 class Conducteur
 {
+    public function __construct()
+    {
+        $this->setCreatedAt(new \DateTime());
+    }
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -17,11 +22,22 @@ class Conducteur
     private $id;
 
     /**
+     * @Assert\Length(
+     *      min = 3,
+     *      minMessage = "Le prénom doit contenir au moins trois caractéres."
+     * )
      * @ORM\Column(type="string", length=31)
      */
     private $prenom;
 
     /**
+     * @Assert\NotBlank(
+     *      message = "Ce champ est obligatoire."
+     * )
+     * @Assert\Length(
+     *      min = 3,
+     *      minMessage = "Le nom doit contenir au moins trois caractéres."
+     * )
      * @ORM\Column(type="string", length=31)
      */
     private $nom;
@@ -32,11 +48,20 @@ class Conducteur
     private $description;
 
     /**
+     * Assert\NotBlank
+     * @Assert\Email(
+     *      message = "{{ value }} n'est pas une adresse mail valable."
+     * )
+
      * @ORM\Column(type="string", length=63)
      */
     private $email;
 
     /**
+     * Assert\GreaterThan(
+     *      value = 17,
+     *      message = "Message Erreur provenant de la class Conducteur."
+     * )
      * @ORM\Column(type="integer")
      */
     private $age;
@@ -45,6 +70,11 @@ class Conducteur
      * @ORM\OneToOne(targetEntity="App\Entity\Voiture", inversedBy="conducteur", cascade={"persist", "remove"})
      */
     private $voiture;
+
+    /**
+     * @ORM\Column(type="datetime", options={"default":"CURRENT_TIMESTAMP"})
+     */
+    private $createdAt;
 
     public function getId(): ?int
     {
@@ -119,6 +149,18 @@ class Conducteur
     public function setVoiture(?Voiture $voiture): self
     {
         $this->voiture = $voiture;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeInterface
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTimeInterface $createdAt): self
+    {
+        $this->createdAt = $createdAt;
 
         return $this;
     }

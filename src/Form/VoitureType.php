@@ -8,6 +8,8 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Form\Extension\Core\Type\TextType as SymfonyTextType;
+use Symfony\Component\Validator\Constraints\File;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 
 class VoitureType extends AbstractType
 {
@@ -19,7 +21,7 @@ class VoitureType extends AbstractType
                 'constraints'   => [
                     new Length([
                         'min'           => 3,
-                        'minMessage'    => 'Message d\'erreur de VoitureType (Form): La marque doit contenir au moins trois caractères.',
+                        'minMessage'    => 'Message d\'erreur de VoitureType (Form): La marque doit avoir au moins trois caractères.',
                     ]),
                 ],
             ])
@@ -28,7 +30,7 @@ class VoitureType extends AbstractType
                 'constraints'   => [
                     new Length([
                         'min'           => 2,
-                        'minMessage'    => 'Le modèle doit contenir au moins deux caractères.',
+                        'minMessage'    => 'Le modèle doit avoir au moins deux caractères.',
                     ]),
                 ],
             ])
@@ -37,7 +39,7 @@ class VoitureType extends AbstractType
                 'constraints'   => [
                     new Length([
                         'min'           => 4,
-                        'minMessage'    => 'L\'immatriculation doit contenit au moins quatre caractères.',
+                        'minMessage'    => 'L\'immatriculation doit avoir au moins quatre caractères.',
                     ]),
                 ],
             ])
@@ -46,9 +48,33 @@ class VoitureType extends AbstractType
                 'constraints'   => [
                     new Length([
                         'min'           => 3,
-                        'minMessage'    => 'La couleur doit contenir au moins trois caratères.',
+                        'minMessage'    => 'La couleur doit avoir au moins trois caratères.',
                     ]),
                 ],
+            ])
+            ->add('image', FileType::class, [
+                'label' => 'Image de la voiture.',
+
+                // unmapped means that this field is not associated to any entity property
+                'mapped' => false,
+
+                // make it optional so you don't have to re-upload the PDF file
+                // everytime you edit the Product details
+                'required' => false,
+
+                // unmapped fields can't define their validation using annotations
+                // in the associated entity, so you can use the PHP constraint classes
+                // 'constraints' => [
+                //     new File([
+                //         'maxSize' => '2048k',
+                //         'mimeTypes' => [
+                //             'image/jpg',
+                //             'image/png',
+                //             'image/gif'
+                //         ],
+                //         'mimeTypesMessage' => 'Formats acceptés: jpg, jpeg, png, gif.',
+                //     ])
+                // ]
             ])
         ;
     }
