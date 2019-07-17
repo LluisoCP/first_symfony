@@ -41,6 +41,9 @@ class VoitureController extends AbstractController
             $image = $form['image']->getData();
             if ($image)
             {
+                //$plate = $form['Immatriculation'];
+                //dump($plate);  //Let's check this out
+                //dd($form);  //Let's check this out
                 $data = $request->request->all(); //get the request post data
                 $plaque = $data['voiture']['Immatriculation']; // get the plate number
                 $nameWithoutExtension = strtolower(str_replace(['_', '-'], '', $plaque)); //remove hyphens / underscores, make it lowercase
@@ -95,6 +98,29 @@ class VoitureController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $image = $form['image']->getData();
+            if ($image)
+            {
+                $data = $request->request->all(); //get the request post data
+                $plaque = $data['voiture']['Immatriculation']; // get the plate number
+                $nameWithoutExtension = strtolower(str_replace(['_', '-'], '', $plaque)); //remove hyphens / underscores, make it lowercase
+                $extension = $image->guessExtension(); // get the original file extension
+                $nameWithExtension = $nameWithoutExtension . '.' . $extension; // new name ~ pm786rt.ext
+
+                try
+                {
+                    $image->move(
+                        $this->getParameter('voiture_directory'),
+                        $nameWithExtension
+                    );
+                }
+                catch (FileException $e)
+                {
+                    $error = [$e->getCode(), $e->getMessage()];
+                }
+                $voiture->setImage($nameWithExtension);
+            }
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('voiture_index');

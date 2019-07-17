@@ -17,6 +17,12 @@
                     <a class="nav-item nav-link" href="{{ path('voiture_index') }}">Voiture</a>
                     <a class="nav-item nav-link" href="{{ path('conducteur_index') }}">Conducteur</a>
                     <a class="nav-item nav-link" href="{{ path('parking_index') }}">Parking</a>
+                    {% if app.user %}
+                    <a class="nav-item nav-link" href="{{ path('app_logout') }}">Logout</a>                    
+                    {% else %}
+                    <a class="nav-item nav-link" href="{{ path('app_login') }}">Login</a>
+                    <a class="nav-item nav-link" href="{{ path('app_register') }}">Sign up</a>
+                    {% endif %}
                 </div>
             </nav>
         {% endblock %}
