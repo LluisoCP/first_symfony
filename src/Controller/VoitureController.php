@@ -41,13 +41,11 @@ class VoitureController extends AbstractController
             $image = $form['image']->getData();
             if ($image)
             {
-                $data = $request->request->all();
-                $plaque = $data['Immatriculation'];
-                // $plaque = $request->request->get('Immatriculation');
-                $nameWithoutExtension = strtolower(str_replace(['_', '-'], '', $plaque));
-                $extension = $image->guessExtension();
-                $nameWithExtension = $nameWithoutExtension . '.' . $extension;
-                // $nameWithExtension = $plaque . '.jpg';
+                $data = $request->request->all(); //get the request post data
+                $plaque = $data['voiture']['Immatriculation']; // get the plate number
+                $nameWithoutExtension = strtolower(str_replace(['_', '-'], '', $plaque)); //remove hyphens / underscores, make it lowercase
+                $extension = $image->guessExtension(); // get the original file extension
+                $nameWithExtension = $nameWithoutExtension . '.' . $extension; // new name ~ pm786rt.ext
 
                 try
                 {
